@@ -50,3 +50,94 @@ footer {
     bottom: 0;
     width: 100%;
 }
+footer p {
+    margin: 0;
+}
+/* Button styles */
+.button {
+    display: inline-block;
+    background: #e8491d;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.button:hover {
+    background: #cf3c14;
+}
+/* Form styles */
+form {
+    margin: 20px 0;
+}
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form input[type="submit"] {
+    background: #35424a;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: #2c3a41;
+}
+/* Responsive styles */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+}
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+}
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 24px;
+    }
+}
+@media (max-width: 400px) {
+    .button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+@media (max-width: 320px) {
+    form input, form textarea {
+        padding: 8px;
+    }
+}
+@media (max-width: 240px) {
+    footer p {
+        font-size: 12px;
+    }
+}
+/* Additional styles for PawPal branding */
+header {
+    background: #ff6f61;
+}
+.button {
+    background: #ff6f61;
+}
+.button:hover {
+    background: #e65b50;
+}
+form input[type="submit"] {
+    background: #ff6f61;
+}
+form input[type="submit"]:hover {
+    background: #e65b50;
+}
+footer {
+    background: #ff6f61;
+}
+footer p {
+    font-size: 14px;
+}
