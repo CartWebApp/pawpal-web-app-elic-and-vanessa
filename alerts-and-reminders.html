@@ -7,45 +7,68 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <body>
     <h1>Alerts and Reminders</h1>
-    <form action="activity-log.html" method="post">
-        
-
-
-
-
-
     
-        <label for="new-reminder">New Reminder:</label>
-        <input type="text" id="new-reminder" name="new-reminder" required>
+    <div class="reminder-form-container">
+        <form id="reminder-form"> 
+            
+            <label for="new-reminder">Reminder Subject:</label>
+            <input type="text" id="new-reminder" name="new-reminder" required placeholder="e.g., Morning Walk">
 
+            <label for="activity-details">Activity Details:</label>
+            <input type="text" id="activity-details" name="Activity" required placeholder="e.g., 30 minute walk at the park">
 
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
 
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
 
+            <label for="activity-type">Activity Type:</label>
+            <select id="activity-type" name="activity-type" required>
+                <option value="Feeding">Feeding</option>
+                <option value="Walking">Walking</option>
+                <option value="Grooming">Grooming</option>
+                <option value="Vet-Visit">Vet Visit</option>
+                <option value="Medication">Medication</option>
+            </select>
 
+            <button type="button" onclick="addReminder()">Add to Schedule</button>
+        </form>
+    </div>
 
-        <label for="Activity">Activity:</label>
-        <input type="text" id="walks" name="Activity" required>
+    <h2>Upcoming Reminders</h2>
+    <ul id="reminder-list">
+       
+    </ul>
 
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
+    <script>
+        function addReminder() {
+            
+            const subject = document.getElementById('new-reminder').value.trim();
+            const details = document.getElementById('activity-details').value.trim();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const type = document.getElementById('activity-type').value;
 
-        <label for="time">Time:</label>
-        <input type="time" id="time" name="time" required>
+           
+            if (subject && date && time) {
+              
+                const listItem = document.createElement('li');
 
-        <label for="activity-type">Activity Type:</label>
-        <select id="activity-type" name="activity-type" required>
-            <option value="feeding">Feeding</option>
-            <option value="walking">Walking</option>
-            <option value="grooming">Grooming</option>
-            <option value="vet-visit">Vet Visit</option>
-            <option value="medication">Medication</option>
-        </select>
+                listItem.textContent = `[${type}] ${subject} (${details}) on ${date} at ${time}`;
 
-        <button type="submit">Add to Schedule</button>
-    </form>
+               
+                document.getElementById('reminder-list').appendChild(listItem);
 
-
+         
+                document.getElementById('reminder-form').reset();
+            } else {
+                alert('Please enter a Reminder Subject, Date, and Time.');
+            }
+        }
+    </script>
 
 
 
