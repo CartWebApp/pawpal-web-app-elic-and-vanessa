@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart - PawPal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ <h1>Medication Management</h1>
+<p>Track your medication schedule and reminders.</p>
+<div class="container">
+    <div class="column">
+        <h2>Add Medication</h2>
+        <div class="medication-form">
+            <input type="text" id="med-name" placeholder="Enter medication name">
+            <input type="text" id="dosage" placeholder="Enter dosage">
+            <input type="time" id="time">
+            <button onclick="addMedication()">Add Medication</button>
+        </div>
+    </div>
+    <div class="column">
+            <ul id="medication-list"></ul>
+
+    </div>
+</div>
+<script>
+    function addMedication() {
+        
+        const name = document.getElementById('med-name').value.trim();
+        const dosage = document.getElementById('dosage').value.trim();
+        const time = document.getElementById('time').value;
+
+    
+        if (name && time) {
+            
+            const listItem = document.createElement('li');
+
+          
+            listItem.textContent = `${name} (${dosage || 'No Dosage'}) at ${time}`;
+
+          
+            document.getElementById('medication-list').appendChild(listItem);
+
+            
+            document.getElementById('med-name').value = '';
+            document.getElementById('dosage').value = '';
+            document.getElementById('time').value = '';
+        } else {
+            alert('Please enter a Medication Name and Time.');
+        }
+    }
+</script>
+
+</html>

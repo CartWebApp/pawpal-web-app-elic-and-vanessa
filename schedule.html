@@ -7,28 +7,58 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<canvas id="activityChart" width="400" height="200"></canvas>
-
-    <div class="controls">
-        <h3>Update Activity</h3>
-        <label for="activityType">Activity:</label>
-        <select id="activityType">
-            <option value="0">Walks</option>
-            <option value="1">Feedings</option>
-        </select>
-
-        <label for="daySelect">Day:</label>
-        <select id="daySelect">
-            <option value="0">Monday</option>
-            <option value="1">Tuesday</option>
-            <option value="2">Wednesday</option>
-            <option value="3">Thursday</option>
-            <option value="4">Friday</option>
-            <option value="5">Saturday</option>
-            <option value="6">Sunday</option>
-        </select>
-        <label for="activityCount">Count:</label>
-        <input type="number" id="activityCount" min="0" value="0">
-        <button id="updateButton">Update</button>
-    </div>
-    
+    <h1>Pet Care Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Walks</th>
+                <th>Feedings</th>
+                <th>Medications</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Monday</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>7:00 AM, 5:00 PM</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>7:00 AM, 5:00 PM</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>7:00 AM, 5:00 PM</td>
+                <td>Heartworm Pill - 9:00 AM</td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>7:00 AM, 5:00 PM</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>7:00 AM, 5:00 PM</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Saturday</td>
+                <td>9:00 AM, 5:00 PM</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>Flea Treatment - 10:00 AM</td>
+            </tr>
+            <tr>
+                <td>Sunday</td>
+                <td>9:00 AM, 5:00 PM</td>
+                <td>8:00 AM, 6:00 PM</td>
+                <td>None</td>
+            </tr>
+        </tbody>
+    </table>
