@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medication Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Medication Management</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Current Medications</h2>
+            <input type="text" id="medication1" placeholder="Add Medication to Column 1">
+            <button onclick="addMedication('medication1', 'list1')">Add Medication</button>
+            <ul id="list1"></ul>
+        </div>
+        <div class="column">
+            <h2>Upcoming Refills</h2>
+            <input type="text" id="medication2" placeholder="Add Medication to Column 2">
+            <button onclick="addMedication('medication2', 'list2')">Add Medication</button>
+            <ul id="list2"></ul>
+        </div>
+    </div>
+
+    <script>
+        function addMedication(medicationId, listId) {
+            const medicationInput = document.getElementById(medicationId);
+            const medicationValue = medicationInput.value.trim();
+            if (medicationValue) {
+                const listItem = document.createElement('li');
+                listItem.textContent = medicationValue;
+                document.getElementById(listId).appendChild(listItem);
+                medicationInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>

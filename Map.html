@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenStreetMap Viewer</title>
+    <title>OpenStreetMap with Street View</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     <link rel="stylesheet" href="PawPal.css">
+       
 </head>
 <body>
-    <div id="map"></div>
+    <div class="container">
+        <div id="map"></div>
+        <div id="streetview">
+            <button class="close-btn" id="closeBtn">×</button>
+            <div class="no-imagery" id="noImagery">
+                <p>Click on the map to view street imagery at that location</p>
+            </div>
+        </div>
+    </div>
+    
     <div class="info-panel">
-        <h3>🗺️ OpenStreetMap</h3>
-        <p>Click on the map to see coordinates</p>
+        <h3>🗺️ OpenStreetMap + Street View</h3>
+        <p>Click anywhere on the map to see street-level imagery</p>
         <div class="coordinates" id="coords">
             Lat: -<br>
             Lng: -
         </div>
+        <button class="toggle-btn" id="toggleBtn" disabled>Open Street View</button>
     </div>
 
     <script>
@@ -31,23 +42,81 @@
 
         // Add a marker
         const marker = L.marker([36.7378, -119.7871]).addTo(map);
-        marker.bindPopup('<b>Fresno, California</b><br>Default location').openPopup();
+        marker.bindPopup('<b>Fresno, California</b><br>Click anywhere for street view').openPopup();
 
-        // Update coordinates on click
+        // Street view elements
+        const streetviewDiv = document.getElementById('streetview');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const noImagery = document.getElementById('noImagery');
+        let currentLat, currentLng;
+        let clickMarker = null;
+
+        // Update coordinates and enable street view on click
         map.on('click', function(e) {
-            const lat = e.latlng.lat.toFixed(6);
-            const lng = e.latlng.lng.toFixed(6);
+            currentLat = e.latlng.lat;
+            currentLng = e.latlng.lng;
+            
             document.getElementById('coords').innerHTML = `
-                Lat: ${lat}<br>
-                Lng: ${lng}
+                Lat: ${currentLat.toFixed(6)}<br>
+                Lng: ${currentLng.toFixed(6)}
             `;
             
-            // Add a temporary marker at click location
-            L.marker([e.latlng.lat, e.latlng.lng])
+            // Remove previous click marker
+            if (clickMarker) {
+                map.removeLayer(clickMarker);
+            }
+            
+            // Add new marker at click location
+            clickMarker = L.marker([currentLat, currentLng])
                 .addTo(map)
-                .bindPopup(`Location: ${lat}, ${lng}`)
+                .bindPopup('Street View Location')
                 .openPopup();
+            
+            // Enable button
+            toggleBtn.disabled = false;
+            toggleBtn.textContent = 'Open Street View';
+            
+            // Auto-open street view
+            openStreetView();
         });
+
+        function openStreetView() {
+            streetviewDiv.classList.add('active');
+            closeBtn.classList.add('active');
+            toggleBtn.textContent = 'Close Street View';
+            
+            // Clear previous content
+            noImagery.style.display = 'none';
+            
+            // Load Mapillary street view
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.mapillary.com/embed?map_style=Mapillary%20light&image_key=&x=${currentLng}&y=${currentLat}&z=17&style=photo`;
+            streetviewDiv.appendChild(iframe);
+        }
+
+        function closeStreetView() {
+            streetviewDiv.classList.remove('active');
+            closeBtn.classList.remove('active');
+            toggleBtn.textContent = 'Open Street View';
+            
+            // Remove iframe
+            const iframe = streetviewDiv.querySelector('iframe');
+            if (iframe) {
+                iframe.remove();
+            }
+            noImagery.style.display = 'flex';
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            if (streetviewDiv.classList.contains('active')) {
+                closeStreetView();
+            } else {
+                openStreetView();
+            }
+        });
+
+        closeBtn.addEventListener('click', closeStreetView);
     </script>
 </body>
 </html>

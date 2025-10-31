@@ -31,4 +31,45 @@
         <input type="number" id="activityCount" min="0" value="0">
         <button id="updateButton">Update</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('activityChart').getContext('2d');
+
+        const activityData = {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [
+                {
+                    label: 'Walks',
+                    data: [2, 3, 1, 4, 2, 5, 3],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                },
+                {
+                    label: 'Feedings',
+                    data: [3, 2, 4, 3, 5, 4, 6],
+                    backgroundColor: 'rgba(153, 102, 255, 0.6)'
+                }
+            ]
+        };
+
+        const activityChart = new Chart(ctx, {
+            type: 'bar',
+            data: activityData,
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('updateButton').addEventListener('click', () => {
+            const activityType = document.getElementById('activityType').value;
+            const dayIndex = document.getElementById('daySelect').value;
+            const activityCount = parseInt(document.getElementById('activityCount').value);
+
+            activityChart.data.datasets[activityType].data[dayIndex] = activityCount;
+            activityChart.update();
+        });
     
