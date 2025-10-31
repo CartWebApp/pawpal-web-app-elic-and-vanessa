@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenStreetMap Viewer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <link rel="stylesheet" href="PawPal.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div class="info-panel">
+        <h3>🗺️ OpenStreetMap</h3>
+        <p>Click on the map to see coordinates</p>
+        <div class="coordinates" id="coords">
+            Lat: -<br>
+            Lng: -
+        </div>
+    </div>
+
+    <script>
+        // Initialize the map (centered on Fresno, CA)
+        const map = L.map('map').setView([36.7378, -119.7871], 13);
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Add a marker
+        const marker = L.marker([36.7378, -119.7871]).addTo(map);
+        marker.bindPopup('<b>Fresno, California</b><br>Default location').openPopup();
+
+        // Update coordinates on click
+        map.on('click', function(e) {
+            const lat = e.latlng.lat.toFixed(6);
+            const lng = e.latlng.lng.toFixed(6);
+            document.getElementById('coords').innerHTML = `
+                Lat: ${lat}<br>
+                Lng: ${lng}
+            `;
+            
+            // Add a temporary marker at click location
+            L.marker([e.latlng.lat, e.latlng.lng])
+                .addTo(map)
+                .bindPopup(`Location: ${lat}, ${lng}`)
+                .openPopup();
+        });
+    </script>
+</body>
+</html>
