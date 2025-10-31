@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medication Page</title>
+    <title>Chart - PawPal</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Medication Management</h1>
-    <div class="container">
-        <div class="column">
-            <h2>Current Medications</h2>
-            <input type="text" id="medication1" placeholder="Add Medication to Column 1">
-            <button onclick="addMedication('medication1', 'list1')">Add Medication</button>
-            <ul id="list1"></ul>
-        </div>
-        <div class="column">
-            <h2>Upcoming Refills</h2>
-            <input type="text" id="medication2" placeholder="Add Medication to Column 2">
-            <button onclick="addMedication('medication2', 'list2')">Add Medication</button>
-            <ul id="list2"></ul>
+ <h1>Medication Management</h1>
+<p>Track your medication schedule and reminders.</p>
+<div class="container">
+    <div class="column">
+        <h2>Add Medication</h2>
+        <div class="medication-form">
+            <input type="text" id="med-name" placeholder="Enter medication name">
+            <input type="text" id="dosage" placeholder="Enter dosage">
+            <input type="time" id="time">
+            <button onclick="addMedication()">Add Medication</button>
         </div>
     </div>
+    <div class="column">
+            <ul id="medication-list"></ul>
 
-    <script>
-        function addMedication(medicationId, listId) {
-            const medicationInput = document.getElementById(medicationId);
-            const medicationValue = medicationInput.value.trim();
-            if (medicationValue) {
-                const listItem = document.createElement('li');
-                listItem.textContent = medicationValue;
-                document.getElementById(listId).appendChild(listItem);
-                medicationInput.value = '';
-            }
+    </div>
+</div>
+<script>
+    function addMedication() {
+        
+        const name = document.getElementById('med-name').value.trim();
+        const dosage = document.getElementById('dosage').value.trim();
+        const time = document.getElementById('time').value;
+
+    
+        if (name && time) {
+            
+            const listItem = document.createElement('li');
+
+          
+            listItem.textContent = `${name} (${dosage || 'No Dosage'}) at ${time}`;
+
+          
+            document.getElementById('medication-list').appendChild(listItem);
+
+            
+            document.getElementById('med-name').value = '';
+            document.getElementById('dosage').value = '';
+            document.getElementById('time').value = '';
+        } else {
+            alert('Please enter a Medication Name and Time.');
         }
-    </script>
-</body>
+    }
+</script>
+
 </html>

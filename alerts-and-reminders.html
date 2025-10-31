@@ -8,54 +8,148 @@
 </head>
 <body>
     <h1>Alerts and Reminders</h1>
-    <form action="activity-log.html" method="post">
+    
+    <div class="reminder-form-container">
+        <form id="reminder-form"> 
+            
+            <label for="new-reminder">Reminder Subject:</label>
+            <input type="text" id="new-reminder" name="new-reminder" required placeholder="e.g., Morning Walk">
+
+            <label for="activity-details">Activity Details:</label>
+            <input type="text" id="activity-details" name="Activity" required placeholder="e.g., 30 minute walk at the park">
+            
+            <label for="activity-type">Activity Type:</label>
+            <select id="activity-type" name="activity-type" required>
+                <option value="Feeding">Feeding</option>
+                <option value="Walking">Walking</option>
+                <option value="Grooming">Grooming</option>
+                <option value="Vet-Visit">Vet Visit</option>
+                <option value="Medication">Medication</option>
+            </select>
+            
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required>
+
+            <button type="button" id="submit-button" onclick="addReminder()">Add to Schedule</button>
+        </form>
+    </div>
+
+    <h2>Upcoming Reminders</h2>
+    <ul id="reminder-list">
+        </ul>
+        <script>
+    
+    let reminders = [];
+
+    function addReminder() {
+        const subject = document.getElementById('new-reminder').value.trim();
+        const details = document.getElementById('activity-details').value.trim();
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+        const type = document.getElementById('activity-type').value;
+
+        if (subject && date && time) {
+           
+            const newReminder = {
+                id: Date.now(), 
+                subject: subject,
+                details: details,
+                date: date,
+                time: time,
+                type: type
+            };
+
+            reminders.push(newReminder);
+
+           
+            renderReminders();
+
+          
+            document.getElementById('reminder-form').reset();
+        } else {
+            alert('Please enter a Reminder Subject, Date, and Time.');
+        }
+    }
+
+    function renderReminders() {
+        const list = document.getElementById('reminder-list');
+        list.innerHTML = ''; 
+        reminders.forEach(reminder => {
+            const listItem = document.createElement('li');
+
+            const reminderText = document.createElement('span');
+            reminderText.textContent = `[${reminder.type}] ${reminder.subject} (${reminder.details}) on ${reminder.date} at ${reminder.time}`;
+            listItem.appendChild(reminderText);
+
+            const actionButtons = document.createElement('div');
+            actionButtons.className = 'action-buttons';
+
+          
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+         
+            editButton.onclick = () => editReminder(reminder.id); 
+            actionButtons.appendChild(editButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.onclick = () => deleteReminder(reminder.id);
+            actionButtons.appendChild(deleteButton);
+
+            listItem.appendChild(actionButtons);
+            list.appendChild(listItem);
+        });
+    }
+
+    function editReminder(id) {
         
+        const reminderToEdit = reminders.find(r => r.id === id);
 
+        if (reminderToEdit) {
+          
+            document.getElementById('new-reminder').value = reminderToEdit.subject;
+            document.getElementById('activity-details').value = reminderToEdit.details;
+            document.getElementById('date').value = reminderToEdit.date;
+            document.getElementById('time').value = reminderToEdit.time;
+            document.getElementById('activity-type').value = reminderToEdit.type;
 
+            
+            const submitButton = document.getElementById('submit-button');
+            submitButton.textContent = 'Update Reminder';
+            submitButton.onclick = () => updateReminder(id);
+        }
+    }
 
+    function updateReminder(id) {
+        
+        const index = reminders.findIndex(r => r.id === id);
 
+        if (index !== -1) {
+           
+            reminders[index].subject = document.getElementById('new-reminder').value.trim();
+            reminders[index].details = document.getElementById('activity-details').value.trim();
+            reminders[index].date = document.getElementById('date').value;
+            reminders[index].time = document.getElementById('time').value;
+            reminders[index].type = document.getElementById('activity-type').value;
 
-    
-        <label for="new-reminder">New Reminder:</label>
-        <input type="text" id="new-reminder" name="new-reminder" required>
+     
+            renderReminders();
 
+           
+            document.getElementById('reminder-form').reset();
+            const submitButton = document.getElementById('submit-button');
+            submitButton.textContent = 'Add to Schedule';
+            submitButton.onclick = addReminder; 
+        }
+    }
 
-
-
-
-
-        <label for="Activity">Activity:</label>
-        <input type="text" id="walks" name="Activity" required>
-
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required>
-
-        <label for="time">Time:</label>
-        <input type="time" id="time" name="time" required>
-
-        <label for="activity-type">Activity Type:</label>
-        <select id="activity-type" name="activity-type" required>
-            <option value="feeding">Feeding</option>
-            <option value="walking">Walking</option>
-            <option value="grooming">Grooming</option>
-            <option value="vet-visit">Vet Visit</option>
-            <option value="medication">Medication</option>
-        </select>
-
-        <button type="submit">Add to Schedule</button>
-    </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-</html>
+    function deleteReminder(id) {
+        
+        reminders = reminders.filter(r => r.id !== id);
+        renderReminders();
+    }
+</script>
+</body>
