@@ -8,33 +8,147 @@
 
 </head> 
 <body>
+   
     <h1>Activity Chart</h1>
+    <div id="data-editor">
+        <h3>Edit Daily Walks</h3>
+        <p>Enter the number of walks for each day:</p>
+        
+        <div id="day-inputs">
+            <label for="inputMonday">Monday Walks:</label>
+            <input type="number" id="inputMonday" min="0" value="2"><br>
+
+            <label for="inputTuesday">Tuesday Walks:</label>
+            <input type="number" id="inputTuesday" min="0" value="3"><br>
+
+            <label for="inputWednesday">Wednesday Walks:</label>
+            <input type="number" id="inputWednesday" min="0" value="1"><br>
+
+            <label for="inputThursday">Thursday Walks:</label>
+            <input type="number" id="inputThursday" min="0" value="4"><br>
+
+            <label for="inputFriday">Friday Walks:</label>
+            <input type="number" id="inputFriday" min="0" value="2"><br>
+
+            <label for="inputSaturday">Saturday Walks:</label>
+            <input type="number" id="inputSaturday" min="0" value="5"><br>
+
+            <label for="inputSunday">Sunday Walks:</label>
+            <input type="number" id="inputSunday" min="0" value="3"><br>
+        </div>
+        
+        <button onclick="updateChartData()">Update Chart</button>
+      
+    </div>
+
     <canvas id="activityChart" width="400" height="200"></canvas>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
-        const ctx = document.getElementById('activityChart').getContext('2d');
-        const activityChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-                datasets: [{
-                    label: 'Walks',
-                    data: [2, 3, 1, 4, 2, 5, 3],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+         let initialData = [2, 3, 1, 4, 2, 5, 3]; 
+        const labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        const days = [
+            { label: 'Monday', id: 'inputMonday', index: 0 },
+            { label: 'Tuesday', id: 'inputTuesday', index: 1 },
+            { label: 'Wednesday', id: 'inputWednesday', index: 2 },
+            { label: 'Thursday', id: 'inputThursday', index: 3 },
+            { label: 'Friday', id: 'inputFriday', index: 4 },
+            { label: 'Saturday', id: 'inputSaturday', index: 5 },
+            { label: 'Sunday', id: 'inputSunday', index: 6 }
+        ];
+
+      
+        let activityChart;
+
+        function initializeChart() {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            activityChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Walks',
+                        data: initialData, 
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                ]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Number of Walks'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Weekly Dog Walk Activity'
+                        }
                     }
                 }
+            });
+            
+            populateInputFields();
+        }
+
+       
+        function populateInputFields() {
+            days.forEach(day => {
+                document.getElementById(day.id).value = initialData[day.index];
+            });
+        }
+
+       
+        function updateChartData() {
+            let allValid = true;
+            let newChartData = [];
+
+            
+            days.forEach(day => {
+                const inputValue = document.getElementById(day.id).value;
+                const newValue = parseInt(inputValue);
+                
+                
+                if (isNaN(newValue) || newValue < 0) {
+                    alert(`Please enter a valid number (0 or greater) for ${day.label}.`);
+                    allValid = false;
+                    return; 
+                }
+                newChartData.push(newValue);
+            });
+
+            if (!allValid) {
+                return; 
             }
-        });
+
+          
+            activityChart.data.datasets[0].data = newChartData;
+            
+            
+            activityChart.update();
+            console.log('Chart updated! New data:', newChartData);
+        }
+
+        
+        window.onload = initializeChart;
     </script>
+
+
+
+
+
+
+
+
+
 
 
 
