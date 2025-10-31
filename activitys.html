@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activities Page</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="activitys.html">Dashboard</a></li>
+            <li><a href="Map.html">Map</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <h1>Activities</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Daily activities</h2>
+            <input type="text" id="activity1" placeholder="Add Activity to Column 1">
+            <button onclick="addActivity('activity1', 'list1')">Add Activity</button>
+            <ul id="list1"></ul>
+        </div>
+        <div class="column">
+            <h2>Upcoming Events</h2>
+            <input type="text" id="activity2" placeholder="Add Activity to Column 2">
+            <button onclick="addActivity('activity2', 'list2')">Add Activity</button>
+            <ul id="list2"></ul>
+        </div>
+    </div>
+
+    <script>
+        function addActivity(activityId, listId) {
+            const activityInput = document.getElementById(activityId);
+            const activityValue = activityInput.value.trim();
+            if (activityValue) {
+                const listItem = document.createElement('li');
+                listItem.textContent = activityValue;
+                document.getElementById(listId).appendChild(listItem);
+                activityInput.value = '';
+            }
+        }
+    </script>
+
+</body>
+</html>
