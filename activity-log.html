@@ -7,18 +7,34 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-   
+    <h1>Activity Log</h1>
+    <div class="container">
+        <div class="column">
+            <h2>Daily activities</h2>
+            <input type="text" id="activity1" placeholder="Add Activity to Column 1">
+            <button onclick="addActivity('activity1', 'list1')">Add Activity</button>
+            <ul id="list1"></ul>
+        </div>
+        <div class="column">
+            <h2>Upcoming Events</h2>
+            <input type="text" id="activity2" placeholder="Add Activity to Column 2">
+            <button onclick="addActivity('activity2', 'list2')">Add Activity</button>
+            <ul id="list2"></ul>
+        </div>
+    </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
+    <script>
+        function addActivity(activityId, listId) {
+            const activityInput = document.getElementById(activityId);
+            const activityValue = activityInput.value.trim();
+            if (activityValue) {
+                const listItem = document.createElement('li');
+                listItem.textContent = activityValue;
+                document.getElementById(listId).appendChild(listItem);
+                activityInput.value = '';
+            }
+        }
+    </script>
+</body>
 </html>
