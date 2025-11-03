@@ -24,7 +24,19 @@
     </div>
 
 
-
-
-
 </body>
+
+    <script>
+        function addMetric(metricId, listId) {
+            const metricInput = document.getElementById(metricId);
+            const metricValue = metricInput.value.trim();
+            if (metricValue) {
+                const listItem = document.createElement('li');
+                listItem.textContent = metricValue;
+                document.getElementById(listId).appendChild(listItem);
+                metricInput.value = '';
+            }
+        }
+    </script>
+</html>
+
