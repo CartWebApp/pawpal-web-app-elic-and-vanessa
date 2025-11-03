@@ -10,6 +10,21 @@
        
 </head>
 <body>
+    <nav>
+        <li>
+            <ul>
+                <li><a href="activitys.html">Dashboard</a></li>
+                <li><a href="Map.html">Map</a></li>
+                <li><a href="Login.html">Login</a></li>
+                <li><a href="create-account.html">Signup</a></li>
+            </ul>
+        </li>
+        <div id="logo">
+            <a href="home-page.html">
+              <img src="/images/download 5.png" alt="My Company Logo">
+            </a>
+          </div>
+    </nav>
     <div class="container">
         <div id="map"></div>
         <div id="streetview">
@@ -19,17 +34,6 @@
             </div>
         </div>
     </div>
-    
-    <div class="info-panel">
-        <h3>🗺️ OpenStreetMap + Street View</h3>
-        <p>Click anywhere on the map to see street-level imagery</p>
-        <div class="coordinates" id="coords">
-            Lat: -<br>
-            Lng: -
-        </div>
-        <button class="toggle-btn" id="toggleBtn" disabled>Open Street View</button>
-    </div>
-
     <script>
         // Initialize the map (centered on Fresno, CA)
         const map = L.map('map').setView([36.7378, -119.7871], 13);

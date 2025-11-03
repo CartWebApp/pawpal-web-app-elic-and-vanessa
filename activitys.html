@@ -4,27 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activities Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="PawPal.css">
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="activitys.html">Dashboard</a></li>
             <li><a href="Map.html">Map</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="Login.html">Login</a></li>
+            <li><a href="create-account.html">Signup</a></li>
         </ul>
+        <div id="logo">
+            <a href="home-page.html">
+              <img src="/images/download 5.png" alt="My Company Logo">
+            </a>
+          </div>
     </nav>
 
     <h1>Activities</h1>
-    <div class="container">
+    <div class="container-activities">
         <div class="column">
             <h2>Daily activities</h2>
             <input type="text" id="activity1" placeholder="Add Activity to Column 1">
             <button onclick="addActivity('activity1', 'list1')">Add Activity</button>
             <ul id="list1"></ul>
         </div>
-        <div class="column">
+        <div class="column-activities">
             <h2>Upcoming Events</h2>
             <input type="text" id="activity2" placeholder="Add Activity to Column 2">
             <button onclick="addActivity('activity2', 'list2')">Add Activity</button>
