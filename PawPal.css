@@ -25,6 +25,7 @@ nav {
     margin: 20px 0;
     display: flex; /* Use flexbox to arrange items in a row */
     justify-content: center;
+    background-color: #08593B
 }
 nav ul {
     list-style: none;
@@ -150,7 +151,7 @@ form input[type="submit"]:hover {
     background: #e65b50;
 }
 footer {
-    background: #ff6f61;
+    background: #08593B;
 }
 footer p {
     font-size: 14px;
@@ -247,7 +248,7 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: rgba(244, 67, 54, 0.9);
+    background: rgba(54, 244, 127, 0.9);
     color: white;
     border: none;
     width: 30px;
