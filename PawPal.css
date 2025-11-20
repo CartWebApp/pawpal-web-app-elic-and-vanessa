@@ -170,6 +170,7 @@ body {
     color: #fff;
     overflow: hidden;
 }
+
 .container {
     display: flex;
     height: 100vh;
@@ -238,7 +239,7 @@ body {
     font-size: 12px;
     margin-top: 10px;
     width: 100%;
-    transition: background 0.2s;
+    transition:background-color 0.2s;
 }
 .toggle-btn:hover {
     background: #45a049;
@@ -276,4 +277,18 @@ body {
     padding: 20px;
     text-align: center;
     color: #999;
+}
+/* Custom styles for the Save Profile button */
+.save-button {
+    
+    background-color: #C6C583; 
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;/
+    transition: background-color 0.3s ease;
+}
+.save-button:hover {
+    background-color: #14c584;; 
 }
