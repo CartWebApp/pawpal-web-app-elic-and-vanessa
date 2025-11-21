@@ -1,40 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activity Log - PawPal</title>
-    <link rel="stylesheet" href="PawPal.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Log - PawPal</title>
+<link rel="stylesheet" href="PawPal.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #77A896;
+    }
+
+    .profile-display {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-display img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #4a90e2;
+        margin-bottom: 10px;
+    }
+
+    .profile-display p {
+        margin: 4px 0;
+    }
+
+    .container {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap; /* Makes it responsive */
+    }
+
+    .column {
+        flex: 1;
+        min-width: 250px;
+        background: #ffffffaa;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+        padding: 8px;
+        margin-bottom: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background-color: #C6C583;
+        color: black;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    button:hover {
+        background-color: #357ABD;
+        color: white;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+</style>
 </head>
 <body>
-    <h1>Activity Log</h1>
-    <div class="container">
-        <div class="column">
-            <h2>Daily activities</h2>
-            <input type="text" id="activity1" placeholder="Add Activity to Column 1">
-            <button onclick="addActivity('activity1', 'list1')">Add Activity</button>
-            <ul id="list1"></ul>
-        </div>
-        <div class="column">
-            <h2>Upcoming Events</h2>
-            <input type="text" id="activity2" placeholder="Add Activity to Column 2">
-            <button onclick="addActivity('activity2', 'list2')">Add Activity</button>
-            <ul id="list2"></ul>
-        </div>
+
+<div class="profile-display" id="profile-display"></div>
+
+<h1>Activity Log</h1>
+<div class="container">
+    <div class="column">
+        <h2>Daily Activities</h2>
+        <input type="text" id="activity1" placeholder="Add Activity">
+        <button onclick="addActivity('activity1', 'list1')">Add Activity</button>
+        <ul id="list1"></ul>
     </div>
+    <div class="column">
+        <h2>Upcoming Events</h2>
+        <input type="text" id="activity2" placeholder="Add Activity">
+        <button onclick="addActivity('activity2', 'list2')">Add Activity</button>
+        <ul id="list2"></ul>
+    </div>
+</div>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Display pet profile
+    const profileDisplay = document.getElementById('profile-display');
+    const petProfile = JSON.parse(localStorage.getItem('petProfile'));
 
-    <script>
-        function addActivity(activityId, listId) {
-            const activityInput = document.getElementById(activityId);
-            const activityValue = activityInput.value.trim();
-            if (activityValue) {
-                const listItem = document.createElement('li');
-                listItem.textContent = activityValue;
-                document.getElementById(listId).appendChild(listItem);
-                activityInput.value = '';
-            }
-        }
-    </script>
+    if (petProfile) {
+        profileDisplay.innerHTML = `
+            <img src="${petProfile.photoURL}" alt="Pet Photo">
+            <p><strong>Owner:</strong> ${petProfile.ownerName}</p>
+            <p><strong>Pet:</strong> ${petProfile.petName}</p>
+            <p><strong>Type:</strong> ${petProfile.petType}</p>
+        `;
+    }
+
+    // Load saved activities from localStorage
+    ['list1', 'list2'].forEach(listId => {
+        const savedActivities = JSON.parse(localStorage.getItem(listId)) || [];
+        const ul = document.getElementById(listId);
+        savedActivities.forEach(act => {
+            const li = document.createElement('li');
+            li.textContent = act;
+            ul.appendChild(li);
+        });
+    });
+});
+
+// Add activity and save to localStorage
+function addActivity(activityId, listId) {
+    const activityInput = document.getElementById(activityId);
+    const activityValue = activityInput.value.trim();
+    if (!activityValue) return;
+
+    const listItem = document.createElement('li');
+    listItem.textContent = activityValue;
+    document.getElementById(listId).appendChild(listItem);
+
+    // Save activities
+    const saved = JSON.parse(localStorage.getItem(listId)) || [];
+    saved.push(activityValue);
+    localStorage.setItem(listId, JSON.stringify(saved));
+
+    activityInput.value = '';
+}
+</script>
+
 </body>
 </html>

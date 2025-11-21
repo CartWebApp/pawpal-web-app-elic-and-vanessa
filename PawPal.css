@@ -290,5 +290,38 @@ body {
     transition: background-color 0.3s ease;
 }
 .save-button:hover {
+    
     background-color: #14c584;; 
 }
+
+#scheduleTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; 
+    margin-bottom: 20px;
+}
+
+
+#scheduleTable th, 
+#scheduleTable td {
+    padding: 10px;
+    border: 1px solid #ffffff;
+    text-align: left;
+    vertical-align: top;
+    word-wrap: break-word;   
+    white-space: normal;   
+}
+
+#scheduleTable th {
+    background-color: #77A896;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+

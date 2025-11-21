@@ -3,100 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schedule - PawPal</title>
+    <title>PawPal - Pet Schedule</title>
     <link rel="stylesheet" href="PawPal.css">
 </head>
-<body
 
-    <h1></body>Pet Care Schedule</h1>
-    <table>
+<body>
+    <h1>Pet Care Schedule</h1>
+
+    <table id="scheduleTable">
         <thead>
             <tr>
                 <th>Day</th>
                 <th>Walks</th>
                 <th>Feedings</th>
                 <th>Medications</th>
+                <th>Vet-Appointments</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Monday</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>7:00 AM, 5:00 PM</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>7:00 AM, 5:00 PM</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>7:00 AM, 5:00 PM</td>
-                <td>Heartworm Pill - 9:00 AM</td>
-            </tr>
-            <tr>
-                <td>Thursday</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>7:00 AM, 5:00 PM</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>7:00 AM, 5:00 PM</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td>Saturday</td>
-                <td>9:00 AM, 5:00 PM</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>Flea Treatment - 10:00 AM</td>
-            </tr>
-            <tr>
-                <td>Sunday</td>
-                <td>9:00 AM, 5:00 PM</td>
-                <td>8:00 AM, 6:00 PM</td>
-                <td>None</td>
-            </tr>
+            <tr><td>Monday</td><td>8:00 AM, 6:00 PM</td><td>7:00 AM, 5:00 PM</td><td>None</td><td>—</td></tr>
+            <tr><td>Tuesday</td><td>8:00 AM, 6:00 PM</td><td>7:00 AM, 5:00 PM</td><td>None</td><td>—</td></tr>
+            <tr><td>Wednesday</td><td>8:00 AM, 6:00 PM</td><td>7:00 AM, 5:00 PM</td><td>Heartworm Pill - 9:00 AM</td><td>—</td></tr>
+            <tr><td>Thursday</td><td>8:00 AM, 6:00 PM</td><td>7:00 AM, 5:00 PM</td><td>None</td><td>—</td></tr>
+            <tr><td>Friday</td><td>8:00 AM, 6:00 PM</td><td>7:00 AM, 5:00 PM</td><td>None</td><td>—</td></tr>
+            <tr><td>Saturday</td><td>9:00 AM, 5:00 PM</td><td>8:00 AM, 6:00 PM</td><td>Flea Treatment - 10:00 AM</td><td>—</td></tr>
+            <tr><td>Sunday</td><td>9:00 AM, 5:00 PM</td><td>8:00 AM, 6:00 PM</td><td>None</td><td>—</td></tr>
         </tbody>
     </table>
-=======
-<h1>Todays Schedule</h1>
 
+    <hr>
 
-        <label for="daySelect">Day:</label>
-        <select id="daySelect">
-            <option value="0">Monday</option>
-            <option value="1">Tuesday</option>
-            <option value="2">Wednesday</option>
-            <option value="3">Thursday</option>
-            <option value="4">Friday</option>
-            <option value="5">Saturday</option>
-            <option value="6">Sunday</option>
-        </select>
-        <label for="activityCount">Activity:</label>
-        <input type="number" id="activityCount" min="0" value="0">
-        <button id="updateButton">Update</button>
-    </div>
+    <h2>Edit Schedule</h2>
+
+    <label>Select Day:</label>
+    <select id="editDay">
+        <option value="0">Monday</option>
+        <option value="1">Tuesday</option>
+        <option value="2">Wednesday</option>
+        <option value="3">Thursday</option>
+        <option value="4">Friday</option>
+        <option value="5">Saturday</option>
+        <option value="6">Sunday</option>
+    </select>
+
+    <br>
+
+    <label>Walks:</label>
+    <input id="walksInput" placeholder="e.g. 8:00 AM, 6:00 PM">
+
+    <label>Feedings:</label>
+    <input id="feedingsInput" placeholder="e.g. 7:00 AM, 5:00 PM">
+
+    <label>Medications:</label>
+    <input id="medInput" placeholder="e.g. Heartworm Pill - 9AM">
+
+    <label>Vet Appointment:</label>
+    <input id="vetInput" placeholder="Any appointment">
+
+    <button id="saveSchedule">Save Changes</button>
+
+    <hr>
+
+    <h1>Walks Chart</h1>
+
+    <label for="daySelect">Day:</label>
+    <select id="daySelect">
+        <option value="0">Monday</option>
+        <option value="1">Tuesday</option>
+        <option value="2">Wednesday</option>
+        <option value="3">Thursday</option>
+        <option value="4">Friday</option>
+        <option value="5">Saturday</option>
+        <option value="6">Sunday</option>
+    </select>
+
+    <label for="activityCount">Walks Count:</label>
+    <input type="number" id="activityCount" min="0" value="0">
+
+    <button id="updateButton">Update Chart</button>
+
+    <br><br>
+
+    <canvas id="activityChart" width="400" height="200"></canvas>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script>
+        const scheduleTable = document.getElementById("scheduleTable");
+
+        // Update Schedule Table
+        document.getElementById("saveSchedule").addEventListener("click", () => {
+            const dayIndex = document.getElementById("editDay").value;
+            const row = scheduleTable.rows[parseInt(dayIndex) + 1];
+
+            row.cells[1].textContent = document.getElementById("walksInput").value;
+            row.cells[2].textContent = document.getElementById("feedingsInput").value;
+            row.cells[3].textContent = document.getElementById("medInput").value;
+            row.cells[4].textContent = document.getElementById("vetInput").value;
+        });
+
+        // Walks Chart Only
         const ctx = document.getElementById('activityChart').getContext('2d');
 
         const activityData = {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             datasets: [
                 {
                     label: 'Walks',
                     data: [2, 3, 1, 4, 2, 5, 3],
                     backgroundColor: 'rgba(75, 192, 192, 0.6)'
-                },
-                {
-                    label: 'Feedings',
-                    data: [3, 2, 4, 3, 5, 4, 6],
-                    backgroundColor: 'rgba(153, 102, 255, 0.6)'
                 }
             ]
         };
@@ -104,23 +119,18 @@
         const activityChart = new Chart(ctx, {
             type: 'bar',
             data: activityData,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+            options: { responsive: true, scales: { y: { beginAtZero: true }}}
         });
 
+        // Update Walks Chart
         document.getElementById('updateButton').addEventListener('click', () => {
-            const activityType = document.getElementById('activityType').value;
             const dayIndex = document.getElementById('daySelect').value;
             const activityCount = parseInt(document.getElementById('activityCount').value);
 
-            activityChart.data.datasets[activityType].data[dayIndex] = activityCount;
+            activityChart.data.datasets[0].data[dayIndex] = activityCount;
             activityChart.update();
         });
-    
+    </script>
 
+</body>
+</html>
