@@ -1,32 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Tracker - PawPal</title>
-    <link rel="stylesheet" href="PawPal.css">
-</head>
-<body>
-    <h1>Health Tracker</h1>
-    <div class="container">
-        <div class="column">
-            <h2>Health Metrics</h2>
-            <input type="text" id="metric1" placeholder="Add Health Metric to Column 1">
-            <button onclick="addMetric('metric1', 'list1')">Add Metric</button>
-            <ul id="list1"></ul>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Health Tracker - PawPal</title>
+        <link rel="stylesheet" href="PawPal.css">
+    </head>
+    <body>
+        <h1>Health Tracker</h1>
+        <div class="container">
+            <div class="column">
+                <h2>Health Metrics</h2>
+                <input type="text" id="metric1" placeholder="Add Health Metric to Column 1">
+                <button onclick="addMetric('metric1', 'list1')">Add Metric</button>
+                <ul id="list1"></ul>
+            </div>
+            
+            <div class="column">
+                <h2>Upcoming Check-ups</h2>
+                <input type="text" id="metric2" placeholder="Add Check-up to Column 2">
+                <button onclick="addMetric('metric2', 'list2')">Add Check-up</button>
+                <ul id="list2"></ul>
+            </div>
         </div>
-        
-        <div class="column">
-            <h2>Upcoming Check-ups</h2>
-            <input type="text" id="metric2" placeholder="Add Check-up to Column 2">
-            <button onclick="addMetric('metric2', 'list2')">Add Check-up</button>
-            <ul id="list2"></ul>
-        </div>
-    </div>
-
-
-</body>
-
+    
+    
+    </body>
+    
     <script>
         function addMetric(metricId, listId) {
             const metricInput = document.getElementById(metricId);
@@ -38,6 +38,7 @@
                 metricInput.value = '';
             }
         }
-    </script>
-</html>
-
+        </script>
+    </html>
+    
+    
