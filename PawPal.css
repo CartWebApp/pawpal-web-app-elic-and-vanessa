@@ -318,8 +318,15 @@ body {
     font-weight: bold;
 }
 
+#animal img {
+    width: 100vw;
+    height: 300px;
 
-
+  }
+  
+  body {
+    overflow-y: auto;
+  }
 
 
 
