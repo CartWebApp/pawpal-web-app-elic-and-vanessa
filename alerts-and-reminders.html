@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activity Log - PawPal</title>
+    <title>Alerts and reminders - PawPal</title>
     <link rel="stylesheet" href="PawPal.css">
 </head>
 <body>
+    <nav>
+        <div id="logo">
+            <a href="index.html">
+              <img src="/images/download 5.png" alt="My Company Logo">
+            </a>
+          </div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="Map.html">Map</a></li>
+            <li><a href="Login.html">Login</a></li>
+            <li><a href="create-account.html">Signup</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+        </ul>
+    </nav>
+
+
+
     <h1>Alerts and Reminders</h1>
     
     <div class="reminder-form-container">
@@ -42,114 +59,104 @@
         </ul>
         <script>
     
-    let reminders = [];
+    let reminders = JSON.parse(localStorage.getItem("reminders") || "[]");
+    const form = document.getElementById("reminder-form");
+    const submitBtn = document.getElementById("submit-button");
+    let editId = null; // track the reminder being edited
+
+    document.addEventListener("DOMContentLoaded", () => {
+        renderReminders();
+    });
+
+    submitBtn.addEventListener("click", () => {
+        if (editId === null) {
+            addReminder();
+        } else {
+            updateReminder();
+        }
+    });
 
     function addReminder() {
+        const reminder = getFormData();
+        if (!reminder) return;
+
+        reminder.id = Date.now();
+        reminders.push(reminder);
+
+        saveAndRender();
+        form.reset();
+    }
+
+    function getFormData() {
         const subject = document.getElementById('new-reminder').value.trim();
         const details = document.getElementById('activity-details').value.trim();
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
         const type = document.getElementById('activity-type').value;
 
-        if (subject && date && time) {
-           
-            const newReminder = {
-                id: Date.now(), 
-                subject: subject,
-                details: details,
-                date: date,
-                time: time,
-                type: type
-            };
-
-            reminders.push(newReminder);
-
-           
-            renderReminders();
-
-          
-            document.getElementById('reminder-form').reset();
-        } else {
-            alert('Please enter a Reminder Subject, Date, and Time.');
+        if (!subject || !date || !time) {
+            alert("Please enter a Reminder Subject, Date, and Time.");
+            return null;
         }
+
+        return { subject, details, date, time, type };
     }
 
     function renderReminders() {
-        const list = document.getElementById('reminder-list');
-        list.innerHTML = ''; 
+        const list = document.getElementById("reminder-list");
+        list.innerHTML = "";
+
         reminders.forEach(reminder => {
-            const listItem = document.createElement('li');
+            const li = document.createElement("li");
 
-            const reminderText = document.createElement('span');
-            reminderText.textContent = `[${reminder.type}] ${reminder.subject} (${reminder.details}) on ${reminder.date} at ${reminder.time}`;
-            listItem.appendChild(reminderText);
+            li.innerHTML = `
+                <span>[${reminder.type}] ${reminder.subject} (${reminder.details}) 
+                on ${reminder.date} at ${reminder.time}</span>
+                <div class="action-buttons">
+                    <button onclick="editReminder(${reminder.id})">Edit</button>
+                    <button onclick="deleteReminder(${reminder.id})">Delete</button>
+                </div>
+            `;
 
-            const actionButtons = document.createElement('div');
-            actionButtons.className = 'action-buttons';
-
-          
-            const editButton = document.createElement('button');
-            editButton.textContent = 'Edit';
-         
-            editButton.onclick = () => editReminder(reminder.id); 
-            actionButtons.appendChild(editButton);
-
-            const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.onclick = () => deleteReminder(reminder.id);
-            actionButtons.appendChild(deleteButton);
-
-            listItem.appendChild(actionButtons);
-            list.appendChild(listItem);
+            list.appendChild(li);
         });
     }
 
     function editReminder(id) {
-        
-        const reminderToEdit = reminders.find(r => r.id === id);
+        const reminder = reminders.find(r => r.id === id);
+        if (!reminder) return;
 
-        if (reminderToEdit) {
-          
-            document.getElementById('new-reminder').value = reminderToEdit.subject;
-            document.getElementById('activity-details').value = reminderToEdit.details;
-            document.getElementById('date').value = reminderToEdit.date;
-            document.getElementById('time').value = reminderToEdit.time;
-            document.getElementById('activity-type').value = reminderToEdit.type;
+        document.getElementById("new-reminder").value = reminder.subject;
+        document.getElementById("activity-details").value = reminder.details;
+        document.getElementById("date").value = reminder.date;
+        document.getElementById("time").value = reminder.time;
+        document.getElementById("activity-type").value = reminder.type;
 
-            
-            const submitButton = document.getElementById('submit-button');
-            submitButton.textContent = 'Update Reminder';
-            submitButton.onclick = () => updateReminder(id);
-        }
+        submitBtn.textContent = "Update Reminder";
+        editId = id;
     }
 
-    function updateReminder(id) {
-        
-        const index = reminders.findIndex(r => r.id === id);
+    function updateReminder() {
+        const updatedData = getFormData();
+        if (!updatedData) return;
 
-        if (index !== -1) {
-           
-            reminders[index].subject = document.getElementById('new-reminder').value.trim();
-            reminders[index].details = document.getElementById('activity-details').value.trim();
-            reminders[index].date = document.getElementById('date').value;
-            reminders[index].time = document.getElementById('time').value;
-            reminders[index].type = document.getElementById('activity-type').value;
+        const index = reminders.findIndex(r => r.id === editId);
+        reminders[index] = { ...reminders[index], ...updatedData };
 
-     
-            renderReminders();
+        editId = null;
+        submitBtn.textContent = "Add to Schedule";
 
-           
-            document.getElementById('reminder-form').reset();
-            const submitButton = document.getElementById('submit-button');
-            submitButton.textContent = 'Add to Schedule';
-            submitButton.onclick = addReminder; 
-        }
+        saveAndRender();
+        form.reset();
     }
 
     function deleteReminder(id) {
-        
         reminders = reminders.filter(r => r.id !== id);
+        saveAndRender();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem("reminders", JSON.stringify(reminders));
         renderReminders();
     }
 </script>
-</body>

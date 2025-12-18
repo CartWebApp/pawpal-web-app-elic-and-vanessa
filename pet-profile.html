@@ -1,37 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Profile - PawPal</title>
-    <link rel="stylesheet" href="PawPal.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Profile - PawPal</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: #77A896;
+    }
+
+    form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        background-color: #ffffff;
+    }
+
+    .photo-container {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #75DAB4;
+        cursor: pointer;
+        background: #f0f0f0 url('https://via.placeholder.com/150') center center / cover no-repeat;
+    }
+
+    #pet-photo {
+        display: none;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #C6C583;
+        color: black;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #357ABD;
+        color: white;
+    }
+</style>
 </head>
 <body>
-    <h1>Add pet profile</h1>
-    <form action="activity-log.html" method="post">
-        <label for="Your-Name">Owner Name:</label>
-        <input type="text" id="Your-Name" name="Your-name" required>
+<form id="pet-form">
+    <div class="photo-container" id="photo-container"></div>
+    <input type="file" id="pet-photo" name="pet-photo" accept="image/*">
 
-        <label for="pet-name">Pet Name:</label>
-        <input type="text" id="pet-name" name="pet-name" required>
+    <label for="Your-Name">Owner Name:</label>
+    <input type="text" id="Your-Name" name="Your-name" required>
 
-        <label for="pet-type">Pet Type:</label>
-        <select id="pet-type" name="pet-type" required>
-            <option value="dog">Dog</option>
-            <option value="cat">Cat</option>
-            <option value="bird">Bird</option>
-            <option value="other">Other</option>
-        </select>
+    <label for="pet-name">Pet Name:</label>
+    <input type="text" id="pet-name" name="pet-name" required>
 
-        <label for="breed">Breed:</label>
-        <input type="text" id="breed" name="breed">
+    <label for="pet-type">Pet Type:</label>
+    <select id="pet-type" name="pet-type" required>
+        <option value="dog">Dog</option>
+        <option value="cat">Cat</option>
+        <option value="bird">Bird</option>
+        <option value="other">Other</option>
+    </select>
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" name="age" min="0" required>
+    <input type="text" id="other-pet-type" name="other-pet-type" placeholder="Enter pet type" style="display:none; margin-top:5px;">
 
-        
+    <label for="breed">Breed:</label>
+    <input type="text" id="breed" name="breed">
 
-        <button type="submit">Save Profile</button>
-    </form>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" min="0" required>
+
+    <button type="button" id="save-profile">Save Profile</button>
+</form>
+
+<script>
+// Photo upload functionality
+const fileInput = document.getElementById('pet-photo');
+const photoContainer = document.getElementById('photo-container');
+
+photoContainer.addEventListener('click', () => fileInput.click());
+
+fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            photoContainer.style.backgroundImage = `url(${e.target.result})`;
+        }
+        reader.readAsDataURL(file);
+    }
+});
+
+// Show "Other" input if selected
+const petTypeSelect = document.getElementById('pet-type');
+const otherPetTypeInput = document.getElementById('other-pet-type');
+
+petTypeSelect.addEventListener('change', () => {
+    if (petTypeSelect.value === 'other') {
+        otherPetTypeInput.style.display = 'block';
+        otherPetTypeInput.required = true;
+    } else {
+        otherPetTypeInput.style.display = 'none';
+        otherPetTypeInput.required = false;
+    }
+});
+
+// Save profile and redirect
+const saveBtn = document.getElementById('save-profile');
+saveBtn.addEventListener('click', () => {
+    const ownerName = document.getElementById('Your-Name').value;
+    const petName = document.getElementById('pet-name').value;
+    const petType = petTypeSelect.value === 'other' ? otherPetTypeInput.value : petTypeSelect.value;
+    const breed = document.getElementById('breed').value;
+    const age = document.getElementById('age').value;
+
+    const photoStyle = photoContainer.style.backgroundImage;
+    const photoURL = photoStyle.slice(5, -2); // remove url("...")
+
+    const petProfile = { ownerName, petName, petType, breed, age, photoURL };
+    localStorage.setItem('petProfile', JSON.stringify(petProfile));
+
+    window.location.href = 'activity-log.html';
+});
+</script>
 </body>
 </html>

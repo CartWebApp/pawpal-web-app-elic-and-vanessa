@@ -3,37 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fedding chart </title>
+    <title>Feeding chart - PawPal </title>
     <link rel="stylesheet" href="PawPal.css">
 </head>
+<style> 
+       body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #77A896;
+    }
+</style>
 <body>
-
-
-
-
-
-
-
-
-<div class="container">
-        <div class="column">
+    <nav>
+        <div id="logo">
+            <a href="index.html">
+              <img src="/images/download 5.png" alt="My Company Logo">
+            </a>
+          </div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="Map.html">Map</a></li>
+            <li><a href="Login.html">Login</a></li>
+            <li><a href="create-account.html">Signup</a></li>
+            <li><a href="about-us.html">About Us</a></li>
+        </ul>
+    </nav>
             <h2>Last Eaten</h2>
-            <input type="text" id="Time" placeholder="Time">
-            <button type="button" id="submit-button" onclick="addReminder()">Add time </button>
-            <ul id="list1"></ul>
+<input type="text" id="lastEatenInput" placeholder="Time">
+<button onclick="addItem('lastEatenInput', 'list1')">Add time</button>
+<ul id="list1"></ul>
+
+<h2>Usual Meal Time</h2>
+<input type="text" id="mealTimeInput" placeholder="Time">
+<button onclick="addItem('mealTimeInput', 'list2')">Add time</button>
+<ul id="list2"></ul>
+
+<h2>Food Type</h2>
+<input type="text" id="foodTypeInput" placeholder="Food type">
+<button onclick="addItem('foodTypeInput', 'list3')">Add food</button>
+<ul id="list3"></ul>
+
+<h2>Grams per Day</h2>
+<input type="text" id="gramsInput" placeholder="Grams per day">
+<button onclick="addItem('gramsInput', 'list4')">Add grams</button>
+<ul id="list4"></ul>
+
+<h2>Amount Eaten Today</h2>
+<input type="text" id="amountEatenInput" placeholder="Amount eaten today">
+<button onclick="addItem('amountEatenInput', 'list5')">Add amount</button>
+<ul id="list5"></ul>
+
+<h2>Amount Left</h2>
+<input type="text" id="amountLeftInput" placeholder="Amount left">
+<button onclick="addItem('amountLeftInput', 'list6')">Add amount</button>
+<ul id="list6"></ul>
+
+<script>
+    function addItem(inputId, listId) {
+        const input = document.getElementById(inputId);
+        const list = document.getElementById(listId);
     
-            <h2>Usual meal time</h2>
-            <input type="text" id="Time" placeholder="Time">
-            <button type="button" id="submit-button" onclick="addReminder()">Add time</button>
-            <ul id="list2"></ul>
-       
-            <h2>Food Type</h2>
-            <input type="text" id="Food-tpye" placeholder="Food-type">
-            <button type="button" id="submit-button" onclick="addReminder()">Add Food </button>
-            <ul id="list3"></ul>
-
-     
-
-
-
+        if (input.value.trim() === "") return;   
+    
+        const li = document.createElement("li");
+        li.textContent = input.value;
+    
+        list.appendChild(li);
+        input.value = "";  
+    }
+    </script>
 </html>
+
+
+
